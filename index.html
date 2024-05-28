@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>jsfxr</title>
-
+<title>L+ jsfxr</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poetsen+One&display=swap" rel="stylesheet">
+<link rel="icon" href= "favicon.ico" type="image/x-icon"> 
 <meta charset="utf-8" >
 
 <script src="riffwave.js"></script>
@@ -15,9 +16,10 @@
 
 var PARAMS;
 var SOUND;
-var SOUND_VOL = 0.25;
+var SOUND_VOL = 0.05;
 var SAMPLE_RATE = 44100;
 var SAMPLE_SIZE = 8;
+var CLICKEDVAL = false;
 
 Params.prototype.query = function () {
   var result = "";
@@ -28,6 +30,10 @@ Params.prototype.query = function () {
   });
   return result.substring(1);
 };
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function gen(fx) {
   PARAMS = new Params();
@@ -57,7 +63,7 @@ function play(noregen) {
       $("#clipping").text(SOUND.clipping);
     }
     audio.src = SOUND.dataURI;
-    $("#wav").attr("href", SOUND.dataURI);
+    //$("#wav").attr("href", SOUND.dataURI);
     $("#sfx").attr("href", "sfx.wav?" + PARAMS.query());
     audio.play(); 
   }, 0);
@@ -247,6 +253,8 @@ function convert(control, v) {
 
 </script>
 
+
+
 <style>
 
 button, p, #sound_vol {
@@ -270,7 +278,17 @@ button, p, #sound_vol {
 }
 
 #wav {
-  font-weight: bold;
+  font-family: "Kanit", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  background: #158cba;
+  border: 6px solid #5a5a5a;
+  cursor: pointer;
 }
 
 
@@ -293,7 +311,7 @@ body {
 }
 
 .ui-widget-content .ui-state-default {
-  border-color: #F58400;
+  border-color: #e74a99;
 }
 
 * {
@@ -332,7 +350,11 @@ hr {
 
 a {
   text-decoration: none;
-  color: #0000ff;
+  color: #5353bf;
+}
+
+#link {
+  color: #8db1d3;
 }
 
 #uncopy {
@@ -360,7 +382,7 @@ a {
 <body>
 
 <div>
-<h1>jsfxr</h1>
+<h1>L+ jsfxr</h1>
 </div>
 
 <div id="generators">
@@ -431,7 +453,6 @@ a {
   <tr><td><div class="signed slider" id="p_hpf_ramp"></div> <th>Cutoff sweep
 </table>
 
-
 </div>
 
 <div>
@@ -442,7 +463,8 @@ a {
 To save the sound, right- or control-click the following link, select 
 "Save As..." and choose a name with a ".wav" extension. <br/>
   <br/>
-  <a id="wav">sfx.wav</a> <br/>
+  
+  <a onclick="if(document.getElementById('iframedel')) {document.getElementById('iframedel').remove()}; var iframe = document.createElement('iframe'); iframe.id = 'iframedel'; iframe.src = SOUND.dataURI; document.body.appendChild(iframe); CLICKEDVAL = true; sleep(100); CLICKEDVAL = false;" id="wav">sfx.wav</a> <br/>
   <!-- <a id="sfx">sfx.wav</a><br/> -->
 
   <table id="stats">
@@ -487,17 +509,20 @@ To save the sound, right- or control-click the following link, select
 
 <hr/>
 <p id="links">
-<a id="uncopy" href="UNLICENSE">¢</a> 2011
-<a href="http://fredricksen.net/">Eric Fredricksen</a>
+2024 <a id="link" href="https://github.com/duckswag/LPjsfxr" id="source">Fork for Love+</a>
 <br/>
-  <a href="https://github.com/grumdrig/jsfxr" id="source">(Source code)</a>
+<br/>
+<a id="uncopy" href="UNLICENSE">¢</a> 2011
+<a id="link" href="http://fredricksen.net/">Eric Fredricksen</a>
+<br/>
+  <a id="link" href="https://github.com/grumdrig/jsfxr" id="source">(Source code)</a>
 <br/>
 <br/>
  (Port of 
- <a href="http://www.drpetter.se/project_sfxr.html" id="original">sfxr</a> 
+ <a id="link" href="http://www.drpetter.se/project_sfxr.html" id="original">sfxr</a> 
 by DrPetter)
 </p>
-
+<hr/>
 
 
 </div>
